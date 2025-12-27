@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  server:
+    build: ./back
+    container_name: callbell-back
+    ports:
+      - "5000:5000"
+    networks:
+      - callbell-net
+    restart: unless-stopped
+  client:
+    build: ./front
+    container_name: callbell-front
+    ports:
+      - "3000:3000"
+    networks:
+      - callbell-net
+    depends_on:
+      - server
+    restart: unless-stopped
+
+networks:
+  callbell-net:
+    driver: bridge
